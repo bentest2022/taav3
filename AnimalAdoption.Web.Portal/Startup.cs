@@ -41,6 +41,11 @@ namespace AnimalAdoption.Web.Portal
             {
                 options.UseSqlServer(_connectionString);
             });
+            
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.All;
+            });
 
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
