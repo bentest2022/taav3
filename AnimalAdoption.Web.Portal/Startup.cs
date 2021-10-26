@@ -47,19 +47,19 @@ namespace AnimalAdoption.Web.Portal
             services.AddTransient<AnimalService>();
 
             // Uncomment this section for Challenge 5
-            //services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-            //    .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
 
             services.AddRazorPages()
                 // Uncomment this section for Challenge 5
-                //.AddMvcOptions(options => 
-                //{
-                //    var policy = new AuthorizationPolicyBuilder()
-                //        .RequireAuthenticatedUser()
-                //        .Build();
-                //    options.Filters.Add(new AuthorizeFilter(policy));
-                //})
-                //.AddMicrosoftIdentityUI()
+                .AddMvcOptions(options => 
+                {
+                    var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+                    options.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddMicrosoftIdentityUI()
                 ;
         }
 
@@ -117,8 +117,8 @@ namespace AnimalAdoption.Web.Portal
             app.UseRouting();
 
             // Uncomment this section for Challenge 5
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
