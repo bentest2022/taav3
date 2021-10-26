@@ -35,7 +35,7 @@ namespace AnimalAdoption.Web.Portal
         {
             services.Configure<Configuration>(Configuration);
 
-            _connectionString = ""; //SET YOUR SQL DB CONNECTION STRING HERE
+            _connectionString = "Server=tcp:sql-azure-sprint-devsecops-1.database.windows.net,1433;Initial Catalog=sqldb-azure-sprint-devsecops-1;Persist Security Info=False;User ID=sprintadmin;Password=7ATI4lXi#Z7c;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"; //SET YOUR SQL DB CONNECTION STRING HERE
 
             services.AddDbContext<AnimalAdoptionContext>(options =>
             {
