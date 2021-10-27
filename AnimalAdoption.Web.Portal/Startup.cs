@@ -45,7 +45,7 @@ namespace AnimalAdoption.Web.Portal
 
       services.Configure<ForwardedHeadersOptions>(options =>
       {
-        options.ForwardedHeaders = ForwardedHeaders.All;
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto;
       });
 
       services.AddHttpContextAccessor();
