@@ -112,8 +112,8 @@ namespace AnimalAdoption.Web.Portal
           var url = context.Request.Path.Value;
           if (!url.ToLowerInvariant().Contains("/missingenvironmentvariable"))
           {
-                    // rewrite and continue processing
-                    context.Request.Path = "/missingenvironmentvariable";
+            // rewrite and continue processing
+            context.Request.Path = "/missingenvironmentvariable";
           }
 
           await next();
@@ -122,7 +122,9 @@ namespace AnimalAdoption.Web.Portal
 
       app.UseRouting();
 
+
       // Uncomment this section for Challenge 5
+      app.UseForwardedHeaders();
       app.UseAuthentication();
       app.UseAuthorization();
 
