@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Data.SqlClient;
@@ -42,6 +43,10 @@ namespace AnimalAdoption.Web.Portal
         options.UseSqlServer(_connectionString);
       });
 
+      services.Configure<ForwardedHeadersOptions>(options =>
+                  {
+                    options.ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto;
+                  });
 
       services.AddHttpContextAccessor();
       services.AddMemoryCache();
@@ -81,6 +86,8 @@ namespace AnimalAdoption.Web.Portal
 
       db.Database.EnsureCreated();
 
+      app.UseForwardedHeaders();
+
       app.UseStaticFiles();
 
       var failurePercentage = Configuration.GetValue<int?>("SimulatedFailureChance");
@@ -107,8 +114,8 @@ namespace AnimalAdoption.Web.Portal
           var url = context.Request.Path.Value;
           if (!url.ToLowerInvariant().Contains("/missingenvironmentvariable"))
           {
-                    // rewrite and continue processing
-                    context.Request.Path = "/missingenvironmentvariable";
+            // rewrite and continue processing
+            context.Request.Path = "/missingenvironmentvariable";
           }
 
           await next();
